@@ -1,0 +1,98 @@
+<!-- Save this in product-detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Detail</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">ClothingStore</a>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
+        <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-6">
+        <img id="product-image" src="" alt="Product" class="img-fluid" />
+      </div>
+      <div class="col-md-6">
+        <h2 id="product-name"></h2>
+        <p class="text-muted" id="product-category"></p>
+        <h4 id="product-price"></h4>
+        <p id="product-description"></p>
+
+        <div class="mb-3">
+          <label for="size" class="form-label">Select Size</label>
+          <select class="form-select" id="size">
+            <option>Small</option>
+            <option>Medium</option>
+            <option>Large</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="color" class="form-label">Select Color</label>
+          <select class="form-select" id="color">
+            <option>Blue</option>
+            <option>Red</option>
+            <option>Black</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/products.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productId = parseInt(params.get("id"));
+    const product = products.find(p => p.id === productId);
+
+    if (product) {
+      document.getElementById("product-name").textContent = product.name;
+      document.getElementById("product-price").textContent = `$${product.price}`;
+      document.getElementById("product-description").textContent = product.description;
+      document.getElementById("product-category").textContent = `Category: ${product.category}`;
+      document.getElementById("product-image").src = product.image;
+    }
+
+    function addToCart() {
+      const size = document.getElementById('size').value;
+      const color = document.getElementById('color').value;
+
+      const item = {
+        name: product.name,
+        price: product.price,
+        size,
+        color,
+        quantity: 1
+      };
+
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existing = cart.find(i =>
+        i.name === item.name && i.size === item.size && i.color === item.color
+      );
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push(item);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Added to cart!");
+    }
+  </script>
+</body>
+</html>
