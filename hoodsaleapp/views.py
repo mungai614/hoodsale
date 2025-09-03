@@ -16,6 +16,14 @@ def product(request):
     return render(request, 'product.html')
 def shop(request):
     return render(request, 'shop.html')
+def register(request):
+    return render(request, 'register.html')
+def register(request):
+    return render(request, 'base.html')
+def register(request):
+    return render(request, 'product_list.html')
+
+
 
 
 

@@ -55,7 +55,7 @@ ROOT_URLCONF = 'hoodsale.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['Templates'],
+        'DIRS': [BASE_DIR / 'templates'],
 
 
         'APP_DIRS': True,
@@ -119,8 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Corrected STATICFILES_DIRS to include the static directory inside BASE_DIR
 STATICFILES_DIRS = [
-    BASE_DIR , 'static',
+    BASE_DIR / 'hoodsaleapp/Static',
 ]
 
 # Default primary key field type
